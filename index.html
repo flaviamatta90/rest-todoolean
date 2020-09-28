@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.2/handlebars.min.js"></script>
+    <title>To do list</title>
+  </head>
+  <body>
+    <h1>To do list</h1>
+    <ul id="list"></ul>
+    <input id="add_element" type="text" placeholder="Inserisci elementi">
+    <button class ="add-todo">Aggiungi</button>
+
+    <script id="entry-template" type="text/x-handlebars-template">
+        {{#each data}}
+        <li id="{{id}}">{{text}} <span class="delete"> X </span> </li>
+        {{/each}}
+
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="js/script.js" charset="utf-8"></script>
+  </body>
+</html>
