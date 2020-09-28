@@ -45,9 +45,7 @@ $(".add-todo").click(function(){
         "text" : val
       },
       "success": function (data, stato) {
-        var elmCreated = [];
-        elmCreated.push(data);
-        render(data);
+        addElemet(data);
       },
       error: function (errore) {
         console.log("E' avvenuto un errore. " + errore);
@@ -61,9 +59,25 @@ function render(data){
   var source = $("#entry-template").html();
   var template = Handlebars.compile(source);
 
+  for(var i = 0; i < data.length; i++){
   var context = {
-    "data": data,
-    "text": data
+    "id": data[i].id,
+    "text": data[i].text
+  }
+
+  var html = template(context);
+  $("#list").append(html);
+  }
+}
+
+
+function addElemet(data){
+  var source = $("#entry-template").html();
+  var template = Handlebars.compile(source);
+
+  var context = {
+    "id": data.id,
+    "text": data.text
   }
 
   var html = template(context);
