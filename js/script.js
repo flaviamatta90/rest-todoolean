@@ -32,6 +32,31 @@ $("#list").on("click", ".delete", function() {
   });
 });
 
+
+$('#add_element').keyup(function(){
+  if (event.which==13) {
+    var val = $("#add_element").val();
+
+    if(val != ""){
+
+      $.ajax(
+        {
+        "url": "http://157.230.17.132:3025/todos/",
+        "method": "POST",
+        "data": {
+          "text" : val
+        },
+        "success": function (data, stato) {
+          addElemet(data);
+        },
+        error: function (errore) {
+          console.log("E' avvenuto un errore. " + errore);
+        }
+      });
+    }
+  }
+});
+
 $(".add-todo").click(function(){
   var val = $("#add_element").val();
 
@@ -67,6 +92,7 @@ function render(data){
 
   var html = template(context);
   $("#list").append(html);
+  $("#add_element").val("");
   }
 }
 
@@ -82,6 +108,8 @@ function addElemet(data){
 
   var html = template(context);
   $("#list").append(html);
+  $("#add_element").val("");
+
 }
 
 
