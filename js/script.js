@@ -2,6 +2,7 @@
 $(document).ready(
   function (){
 
+// chiamata ajax
   $.ajax(
     {
     "url": "http://157.230.17.132:3025/todos",
@@ -13,7 +14,9 @@ $(document).ready(
       console.log("E' avvenuto un errore. " + errore);
     }
   });
+  // /chiamata ajax
 
+  // chiamata ajax per cancellare
 $("#list").on("click", ".delete", function() {
 
   var element = $(this).parent();
@@ -31,8 +34,9 @@ $("#list").on("click", ".delete", function() {
     }
   });
 });
+// /chiamata ajax per cancellare
 
-
+// chiamata ajax per inserire elemento
 $('#add_element').keyup(function(){
   if (event.which==13) {
     var val = $("#add_element").val();
@@ -77,9 +81,27 @@ $(".add-todo").click(function(){
       }
     });
   }
-
 });
+// chiamata ajax per inserire elemento
 
+// chiamata ajax per modificare un elemento
+$.ajax(
+  {
+  "url": "http://157.230.17.132:3025/todos/",
+  "method": "PATCH",
+  "data": {
+    "text": text
+  },
+  "success": function (data, stato) {
+    render(data);
+  },
+  error: function (errore) {
+    console.log("E' avvenuto un errore. " + errore);
+  }
+});
+// /chiamata ajax per modificare un elemento
+
+// inserire il tutto nel tamplate
 function render(data){
   var source = $("#entry-template").html();
   var template = Handlebars.compile(source);
@@ -96,7 +118,6 @@ function render(data){
   }
 }
 
-
 function addElemet(data){
   var source = $("#entry-template").html();
   var template = Handlebars.compile(source);
@@ -109,8 +130,9 @@ function addElemet(data){
   var html = template(context);
   $("#list").append(html);
   $("#add_element").val("");
-
 }
+
+// /inserire il tutto nel tamplate
 
 
 });
