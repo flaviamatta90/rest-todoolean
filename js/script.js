@@ -8,7 +8,7 @@ $(document).ready(
     "url": "http://157.230.17.132:3025/todos",
     "method": "GET",
     "success": function (data, stato) {
-      render(data);
+      getTodos(data);
     },
     error: function (errore) {
       console.log("E' avvenuto un errore. " + errore);
@@ -35,6 +35,28 @@ $("#list").on("click", ".delete", function() {
   });
 });
 // /chiamata ajax per cancellare
+
+// chiamata ajax per modificare un elemento
+$("#list").on("click", ".update", function() {
+  var element = $(this).parent();
+  var id = element.attr("id");
+  var val = element.children("input").val();
+
+$.ajax(
+  {
+  "url": "http://157.230.17.132:3025/todos/"+id,
+  "method": "PATCH",
+  "data": {
+    "text": val
+  },
+  "success": function (data, stato) {
+  },
+  error: function (errore) {
+    console.log("E' avvenuto un errore. " + errore);
+  }
+});
+});
+// /chiamata ajax per modificare un elemento
 
 // chiamata ajax per inserire elemento
 $('#add_element').keyup(function(){
@@ -84,37 +106,12 @@ $(".add-todo").click(function(){
 });
 // chiamata ajax per inserire elemento
 
-// chiamata ajax per modificare un elemento
-$.ajax(
-  {
-  "url": "http://157.230.17.132:3025/todos/",
-  "method": "PATCH",
-  "data": {
-    "text": text
-  },
-  "success": function (data, stato) {
-    render(data);
-  },
-  error: function (errore) {
-    console.log("E' avvenuto un errore. " + errore);
-  }
-});
-// /chiamata ajax per modificare un elemento
+
 
 // inserire il tutto nel tamplate
-function render(data){
-  var source = $("#entry-template").html();
-  var template = Handlebars.compile(source);
-
+function getTodos(data){
   for(var i = 0; i < data.length; i++){
-  var context = {
-    "id": data[i].id,
-    "text": data[i].text
-  }
-
-  var html = template(context);
-  $("#list").append(html);
-  $("#add_element").val("");
+    addElemet(data[i])
   }
 }
 
